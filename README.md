@@ -1,7 +1,7 @@
 # MyReads Project
 
 This project was made as part of the Udacity [React nanodegree](https://www.udacity.com/course/react-nanodegree--nd019). 
-The objective was to better grasp React Fundamentals - like renderinh UI, State Management, Lifecycle Events and React Router.
+The objective was to better grasp React Fundamentals - like rendering UI, State Management, Lifecycle Events and React Router.
 
 Note that the only search terms available can be found in the SEARCH_TERMS.md file.
 
