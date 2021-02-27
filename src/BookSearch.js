@@ -5,19 +5,19 @@ import Book from './Book'
 
 class BookSearch extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired,
+    bookStatus: PropTypes.func.isRequired,
+    foundedBooks: PropTypes.array.isRequired,
     onSearch: PropTypes.func.isRequired,
-    errors: PropTypes.string.isRequired
+    errors: PropTypes.string.isRequired,
+    onBookUpdate: PropTypes.func.isRequired
   }
 
-  onSubmitSearch = (event) => {
-    event.preventDefault();
-    const query = event.target.querySelector('input').value || "";
-    if (query.trim().length > 0) this.props.onSearch(query);
+  onSubmitSearch = (query) => {
+    this.props.onSearch(query.trim());
   }
 
   render() {
-    const { books, errors } = this.props;
+    const { bookStatus, foundedBooks, errors, onBookUpdate } = this.props;
 
     return (
       <div className="search-books">
@@ -28,20 +28,32 @@ class BookSearch extends Component {
             Close
           </Link>
           <div className="search-books-input-wrapper">
-            <form onSubmit={this.onSubmitSearch}>
+            <form onSubmit={(form) => {
+              form.preventDefault();
+              this.onSubmitSearch(form.target.querySelector('input').value)
+            }}>
               <input
+                autoFocus
                 type="text"
                 placeholder="Search by title or author"
                 name="search"
+                onChange={(input) => {
+                  if (input.target.value === "") this.onSubmitSearch("");
+                }}
               />
             </form>
           </div>
         </div>
         <div className="search-books-results">
-          {books.length ?
+          {foundedBooks.length ?
             <ol className="books-grid">
-              {books.map((book, i) => (
-                <Book key={i} book={book} />
+              {foundedBooks.map((book, i) => (
+                <Book
+                  key={i}
+                  book={book}
+                  onBookChange={onBookUpdate}
+                  status={bookStatus(book)}
+                />
               ))}
             </ol>
             : <p>{errors ? 'No books founded for this query' : 'Please search for a book'}</p>}

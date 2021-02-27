@@ -5,7 +5,8 @@ import BookShelf from './BookShelf'
 
 class MyReads extends Component {
   static propTypes = {
-    books: PropTypes.array.isRequired
+    books: PropTypes.array.isRequired,
+    onBookUpdate: PropTypes.func.isRequired
   }
 
   getShelves() {
@@ -30,6 +31,7 @@ class MyReads extends Component {
               books={this.props.books.filter((book) => (
                 book.shelf === shelf.bookState
               ))}
+              onBookUpdate={this.props.onBookUpdate}
             />
           ))}
         </div>
